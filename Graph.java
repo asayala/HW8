@@ -38,10 +38,10 @@ public class Graph {
 
   /*
    * method setValue
-   * 
+   *
    * Sets a vertex's (node's) value.
-   */ 
-  
+   */
+
   public void setValue(int vertexIndex, int value) {
     if (vertexIndex >= 0 && vertexIndex < numVertices) {
       vertexValues.set(vertexIndex, value);
@@ -58,10 +58,10 @@ public class Graph {
 
   /*
    * method printGraph
-   * 
+   *
    * Prints the graph as an adjacency matrix
-   */ 
-  
+   */
+
   public void printGraph() {
     System.out.println(
          "\nAdjacency Matrix Representation:\n");
@@ -99,12 +99,37 @@ public class Graph {
    * This method returns the value of the root vertex, where root is defined in
    * this case as a node that has no incoming edges. If no root vertex is found
    * and/or more than one root vertex, then return -1.
-   * 
+   *
    */
-  
-  public int findRoot() {
 
-    // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME/SECTION AT TOP OF FILE
-    return -1;
-  } 
+  public int findRoot() {
+    int numVertices = adjListArr.length;
+    int[] inDegree = new int[numVertices];
+
+    // Calculate in-degrees for all vertices using adjacency list
+    for (int i = 0; i < numVertices; i++) {
+      for (Integer dest : adjListArr[i]) {
+        inDegree[dest]++;
+      }
+    }
+
+    int rootIndex = -1;
+    int rootCount = 0;
+
+    // Find the vertex with in-degree 0
+    for (int i = 0; i < numVertices; i++) {
+      if (inDegree[i] == 0) {
+        rootIndex = i;
+        rootCount++;
+      }
+    }
+
+    // If there is exactly one root, return its value; otherwise, return -1
+    if (rootCount == 1) {
+      return vertexValues.get(rootIndex);
+    } else {
+      return -1;
+    }
+  }
+
 }
